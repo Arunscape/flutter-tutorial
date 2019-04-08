@@ -23,6 +23,7 @@ class RandomWords extends StatefulWidget {
 class RandomWordsState extends State<RandomWords> {
   final List<WordPair> _suggestions = <WordPair>[];
   final TextStyle _biggerFont = const TextStyle(fontSize: 18.0);
+  final Set<WordPair> _saved = new Set<WordPair>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +51,16 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair) {
+    final bool alreadySaved = _saved.contains(pair);
     return new ListTile(
-      title: new Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-    );
+        title: new Text(
+          pair.asPascalCase,
+          style: _biggerFont,
+        ),
+        trailing: new Icon(
+          // Add the lines from here...
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : null,
+        ));
   }
 }
